@@ -1,6 +1,6 @@
 #A Multi-View Deep Learning Approach for Cross Domain User Modeling in Recommendation System
 
-## Ali Elkahky, Yang Song, Xiaodong He
+## Ali Elkahky, Yang Song, Xiaodong He,  WWW'15 [PDF](http://research.microsoft.com/pubs/238334/frp1159-songA.pdf)
 
 ## Abstract
 
@@ -21,4 +21,4 @@
 - パブリックに公開されているデータセットでも実験を行い、クロスドメインのレコメンデーションシステムを構成する上で、トラディショナルな生成トピックモデルより優れていることを確認した
 - Scalabilityは、提案手法は数100万規模のユーザと数10億規模のアイテムに対して容易にスケールできる
 - 全てのドメインから得られる特徴を組み合わせることは、それぞれのドメインにモデルを分けてやるより良いパフォーマンスであることを確認した
-
+- 
