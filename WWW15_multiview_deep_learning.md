@@ -28,7 +28,7 @@ User Modeling
 ## Key words
 User Modeling, Recommendation System, Multi-view learning, Deep learning
 
-## Introduction
+## 1. Introduction
 
 - 推薦システムとpersonalizationのweb serviceでの重要性は増してきている
 - ユーザと相関の高いアイテムを出来る限り早く見つけたい
@@ -72,42 +72,220 @@ User Modeling, Recommendation System, Multi-view learning, Deep learning
 4. MV-DNNから学習されたsemantic feature mappingによりユーザのcold start problemに対応した
 5. 実世界のビッグデータを用いた厳密な評価実験により、state-of-the-artを大きく上回る有効性を確認した
 
-## Related work
 
-- 
 
-There has been extensive study on recommendation sys- tems with a myriad of publications. In this section, we aim at reviewing a representative set of approaches that are mostly related to our proposed approach.
+## 2. Related work
 
-In general, recommendation systems can be divided in- to collaborative recommendation and content based recom- mendation. Collaborative Recommendation systems recom- mend an item to a user if similar users liked this item. Exam- ples of this technique include nearest neighbor modeling [3], Matrix Completion [19], Restricted Boltzmann machine [22], Bayesian matrix factorization [21] etc. Essentially, these ap- proaches are user collaborative filtering, item collaborative filtering or both item and user collaborative filtering. In user collaborative filtering such as [3], the algorithm com- putes the similarity between users based on items they liked. Then, the scores of user-item pairs are computed by combin- ing scores of this item given by similar users. Item based col- laborative filtering [23], computes similarity between items based on users who like both items, then recommend the user items similar to the ones she liked before. User-itembased collaborative filtering finds a common space for items and users based on user-item matrix and combines the item and user representation to find a recommendation. All ma- trix factorization approaches like [19] and [21] are examples of this technique. CF can be extended to large-scale setups like in [6]. However, CF is generally unable to handle new users and new items, a problem which is often referred to as cold-start issue.
-The second approach for recommendation systems is content- based recommendation. This approach extracts features from item’s and/or user’s profile and recommend items to users according to these features. The underlying assump- tion is that similar users tend to like items similar to the items they liked previously. In [14], a method is proposed to construct a search query with some features of items the user liked before to find other relevant items to recommend. An- other example is presented in [15] where each user is modeled by a distribution over News topics that is constructed from articles she liked with a prior distribution of topic preference computed using all users who share the same location. This approach can handle new items (News articles) but for new users the system used location feature only which implies that new users are expected to see most frequent topics in their location. This might be a good features to recommend News but in other domains, for example Apps recommen- dation, using only location information may not work as a good prior over user’s preferences.
-Recently, researchers have developed approaches that com- bine both collaborative recommendation and content based recommendation. In [16], the author used item features to smooth user data before using collaborative filtering. In [7], the authors used Restricted Boltzmann Machine to learn similarity between items, and then combined this with col- laborative filtering. A Bayesian approach was developed in [32] to jointly learn the distribution of items, research pa- pers in their case, over different components (topics) and the factorization of the rating matrix.
-Handling the cold start issue in recommendation systems is studied mainly for new items (items that have no rating by any user). As we mentioned before, all content based filtering can handle cold start for item, and there are some methods that were developed and evaluated specifically for this issue like in [24] and [7]. The work in [18] studied how to learn user preferences for new users incrementally by rec- ommending items that give the most information about user preferences while minimizing the probability of recommend- ing irrelevant content. User modeling via rich features have been studied a lot recently. For example, it has been shown that user search queries can be used to discover the similari- ties between users [25]. Rich features from user search histo- ry has also been used for personalized web search [26]. For recommendation systems, the authors in [2] leveraged the user’s historical search queries to build personalized taxono- my for recommending Ads. On the other hand, researchers have discovered that a user’s social behaviors can also be used to build the profile of the user. In [1], the authors used user’s tweets in Twitter data to recommend News articles.
-Most traditional recommendation system research focused on data within a single domain. Recently, there has been an increasing interest in cross domain recommendation. There are different approaches for addressing cross domain rec- ommendation. One approach is to assume that different domains share similar set of users but not the items, as il-lustrated in [20]. In their work, the authors augmented data from rating of movies and books from datasets that have common users. The augmented data set was then used to perform collaborative filtering. They showed that this in particular helped the cases where users with little profile information in one of the domains (cold-start users). The second approach addressed the scenarios where the same set of items shared different types of feedbacks in different domains like user clicks or user explicit rating. As shown in [17], the authors introduced a coordinate system trans- fer method for cross domain matrix factorization. In [12], the authors studied the cross domain recommendation in the case where there existed no shared users or items be- tween domains. They developed a generative model to dis- cover common clusters between different domains. However, a challenge in their approach is its ability to scale beyond medium datasets due to the computational cost. A different approach was introduce in [28] for author collaboration rec- ommendation where they built a topic model to recommend authors to collaborate from different research fields.
-
-For many approaches in recommendation systems the ob- jective function is to minimize the root mean squared error on the user-item matrix reconstruction. Recently, ranking based objective function has shown to be more effective in giving better recommendation as shown in [11].
-Deep learning has recently been proposed for building rec- ommendation systems for both collaborative and content based approaches. In [22], an RBM model was used for collaborative filtering. Deep learning for content based rec- ommendation has been done for example in [30] where deep learning was applied to learn embedding for music features. This embedding was then used to regularize matrix factor- ization in collaborative filtering.
-
-## Description of the data sets
+省略
+ 
+## 3. Description of the data sets
 
 - 以下の4つのデータセットを用いた
+
 1. Bingから得られる検索ログ
 2. Bing Newsから得られるニュース記事のブラウジングログ
 3. Windows AppStoreから得られるAppのダウンロードログ
 4. Xboxから得られるMovie/TVの視聴ログ
+
 - すべてのログは、英語を公用語とするマーケット（US, Canada, UK）で2013.12-2014.6の間に収集された
 
-ユーザ特徴
+### user feature
 - Bing上でのユーザの検索クエリとクリックしたURLを収集
 - クエリはまず正規化され、unigram features（つまり一つ一つの独立した単語特徴）に分割した。URLは次元削減のためdomain-levelに短縮した（例えば、www.linkedin.comなど）
 - 最も人気で価値のある特徴だけを保つために、TF-IDFのスコアを用いた
-- 全部で、300万のunigram featuresと50万のdomain featuresを獲得し、ユーザ特徴として、合計350万の特徴ベクトルを得た
+- 全部で、300万のunigram featuresと50万のdomain featuresを獲得し、ユーザ特徴として、合計350万の特徴ベクトルをえた
 
-Overall, we selected 3 million unigram features and 500K domain features, leading to a total length of 3.5-million user feature vector.
-(News Features) We collected news article clicks from Bing News vertical. Each News item is represented by three parts of features. The first part is the title features encoded using letter tri-gram representation as we will describe in the next section. Secondly, the top-level category of each News (e.g., Entertainment) is encoded as binary features. Finally, the Named Entities in each article, extracted using
+### news feature
+- Bing Newsからニュース記事のクリックログを収集
+- それぞれのアイテム（ニュース記事）は、以下の3つの特徴で表現されるnews featureを10万えた
+
+1. title feature：文字のtri-gram表現にencode
+2. top-level category：（ex, Entertainment）バイナリ特徴にencode
+3. named entity（固有表現）：NLPパーサーで抽出。文字のtri-gram表現にencode
+
+### app feature
+- Windows AppStoreにおけるユーザのアプリダウンロード履歴を収集
+- アプリのタイトルは文字のtri-gram表現にencodeし、バイナリ特徴にencodeしたカテゴリと結合
+- アプリの説明文はよく変更されるので、特徴にいれなかった
+- 5万の特徴ベクトルをえた
+
+### movie/TV feature
+- Xboxの映画やテレビの視聴履歴を収集
+- タイトルと説明文はtext featureに結合され文字のtri-gram表現にencode
+- ジャンルは例のごとくバイナリ特徴にencode
+- 5万の特徴ベクトルをえた
+
+我々のモデルでは、ユーザ特徴はuser viewにマップされ、それ以外の特徴はそれぞれ異なるitem viewにマップされる。モデルを学習するために、それぞれのuser viewはそのユーザを含むitem viewにマッチさせた。これを実現するためIDによって内部で結合し、user-item viewのペアからログインしているユーザをサブサンプリングした。これによってつくたれたデータセットはTable 1
+
+![table1](/Users/Corpy/Desktop/table1.png)
+
+## 4. DSSM for user modeling in recommendation systems
+
+- CIKM'13の論文[1]でweb検索において文書とクエリのマッチングを強化するDSSMモデルを提案した
+- 今回紹介するmulti-viewモデルはそれに近い
+- DSSM（figure 1）を以下に簡単に説明する
+
+![fig1](/Users/Corpy/Desktop/fig1.png)
+
+DNNへの入力(生のtext features)は高次元のterm vector（ex.正規化をしていないクエリやドキュメント内の出現回数）である。
+DSSMでは入力はそれぞれ２つのNNを通過し、共有潜在空間内のsemantic vectorにマップされる。
+web document rankingにおいては、DSSMは、クエリとドキュメントの相関をそれぞれ対応するsemantic vectorのコサイン類似度で求め、そのスコアによって、クエリをランキングする。
+
+より正確に言うと、$x$がinput term vector、$y$がoutput vector、$l_i, i = 1, ..., N − 1$を中間の隠れ層、$W_i$を$i$番目の重み行列、$b_i$を$i$番目のbias termとすると、 
+
+$$l_1 = W_1x$$
+$$l_i = f(W_il_{i−1} +b_i), i=2,...,N−1$$ 
+$$y = f(W_Nl_{N−1} + b_N)$$
+
+となる。output layerとhidden layer$l_i, i = 2, ..., N − 1$の活性化関数としてシグモイド関数$tanh$を用いる。
+
+$$f(x) = \frac{1 − e^{−2x}}{1+e^{-2x}}$$
+
+クエリ$Q$とドキュメント$D$のsemantic relevance scoreはコサイン類似度で、
+
+$$R(Q,D) = cosine(y_Q,y_D) = \frac{{y_Q}^T y_D}{ ||y_Q || · ||y_D ||}$$
+
+のように求められる。
+$y_Q$と$y_D$はそれぞれクエリとドキュメントのsemantic vectors。web searchでは、クエリが与えられた時、ドキュメントはこのrelevance scoreが高い順にソートして表示される。
+
+従来は、それぞれ単語$w$はone-hot vectorで表現され、ベクトルの次元数はvocabularyのサイズだった。しかし実際の検索タスクでは、volcabularyのサイズは往々にしてとても大きいので、このone-hot vectorでモデルを学習するのはとてもハイコストだった。したがって、DSSMでは単語をletter-tri-gram vectorによって表現するためにword hashing layerを使う。
+
+例えば、webという単語が与えられ、#web#のように単語の境界記号が与えられたとすると、単語はletter-n-gramに分割できる（ここではletter-tri-gramなので#-w-e, w-e-b, e-b-#）そして、単語はletter-tri-gramのcount vectorとして表現される。
 
 
+例えば、Figure 1において、, 一層目の行列$W_1$はterm vectorからletter-tri-gram count vectorに変換する行列であり、学習は必要ない。全単語数が極端に大きくなったとしても、全letter-tri-gram数は限られている。それゆえ、これは訓練データにない新規単語に対しても一般化できる。
 
-## 参考資料
+訓練では、クエリはそのクエリによってクリックされた文書
+In training, it is assumed that a query is relevant to the documents that are clicked on for that query, and the parameters of the DSSM, 
+
+すなわち、重み行列$W_i$は、これを用いて学習される。すなわち、あるクエリが与えられたときのドキュメントの事後確率は以下のsoftmax関数によって推定される。
+
+$$P(D|Q) = \frac{exp(γR(Q, D))}{\sum_{D′∈ \bf{D}}{} exp(γR(Q,D′))}$$
+
+γはsoftmax関数のsmoothing factorで、一般に実験的に求められる。$\bf{D}$は、ランキングされる文書の候補setを指す。
+
+クエリとクリックされた文書のペアは$(Q, D^+)$、$Q$はクエリ、$D^+$はクリックされた文書。$\bf{D}$を$D^+$と$N$個のランダムに選ばれたクリックされていない文書$\{D_j^− ; j = 1, , N \}$で近似する。訓練では、model parameterはtrain set内でクエリが与えられたときクリックされた文書の確率を最大化するように推定される。つまり以下を最小化する。
+
+$$L(Λ) = - log\prod_{(Q, D^+)}P(D^+|Q)$$
+
+$Λ$はparameter set。
+
+## 5. Multi-view deep neural network
+MV-DNNはDSSMを2つ以上の異なるviewを一つの共有viewにマップするmulti-vieモデルに拡張したものであり、２つ以上の異なるviewの共有mapping viewを学習する際の一般的なモデルである（figure 2）。
+
+![fig2](/Users/Corpy/Desktop/fig2.png)
+
+このセッティングにおいて、viewは$v+1$個あり、pivot viewを$X_u$、それ以外を$X_1,...,X_v$とする。それぞれviewは非線形マッピング層$f_i(X_i, W_i)$を持ち、これらは、shared semantic space上の$Y_i$に変換される。
+
+訓練データの、$j$番目のサンプルはpivot viewの$X_{u,j}$と、補助的なactive viewの$X_{a,j}$をもつ。ここでaはacitive viewのindexを指す。activeじゃない他のviewの入力$X_{i:i≠a}$は0 vectorとする。semantic spaceにおいてpivot viewのマッピングとそれ以外のviewのマッピングの相関の合計を最大化するような非線形マッピングを以下のようにして探す。
+
+$$p = arg_{W_u} max_{W_1,...W_v} \sum_{j=1}^{N}{\frac{e^{αa cos(Yu,Ya,j)}}{􏰃\sum_{X'∈R^da}{e^{α cos(Yu,fa(X′,Wa))}}}}$$
+
+我々のセットアップでは、pivot view$X_u$がuser featureであり、それ以外の付加的なviewが推薦したいそれぞれ異なるタイプのitem featureである。このようにパラメータをシェアすることで、あるドメインでデータが少なくても多のより多くあるドメインを通してよいmappingを学習することができる。
+
+類似したnewsの嗜好を持つユーザは、他のモダリティにおいても類似した嗜好を持つという仮定が成立てば、この手法はうまくいくはずである。つまり、この仮定が正しければ、あらゆるドメインのサンプルが類似したユーザを全てのドメイン内でより正確にグルーピングすることを助ける。実験結果より、この仮定には合理性があることが確認できた。
+
+### 5.1. Training MV-DNN
+MV-DNNは確率的勾配降下法(Stochastic Gradient Decent; SGD)を用いて学習した。それぞれ訓練サンプルはuser viewとdata viewのペアの入力になっている。
+
+### 5.2. Advantages of MV-DNN
+
+利点というか従来のDSSMからの改良が2つある。
+
+- 従来のDSSMはクエリviewと文書viewを同じサイズの特徴次元数で用いていた。でも実際は、全部同じサイズのでうまく表せない。例えば、tri-gramで全部表すとして、URLはwwwとかcomとかの接頭辞や接尾辞をもつ。これらが、同じ特徴としてマッピングされてしまう。でも我々はinputのraw textが短い時こういう問題は起こりにくいことを発見した。だから我々はその無駄な部分を削除して、category情報を入れた
+- pair-wiseで学習することでscalabilityの向上を果たした
+
+## 6. Dimension and data reduction
+
+システムのスケーラビリティを向上させるために以下の４つを考えた。
+
+### 6.1. Top Features
+most frequent featureのTop-Kを選ぶ。前に述べたように、user raw featureをTF-IDFのスコアで前処理。
+
+### 6.2. K-means
+K-means clusteringを使う。
+
+
+### 6.3. Local sensitive Hashing
+Local sensitive hahing(LSH)を使う。
+
+### 6.4. Reduce the Number of Training Examples
+Train datasetのサンプル自体を減らす。ユーザに対応するそれぞれのviewのsampleがひとつになるように。各viewでユーザがライクしたすべてのアイテムのアベレージとる？
+
+## 7. Experimental setup
+MV-DNNを従来手法のMost Frequent, 一般的なSVD matrix decompositionを使ったCF, CCA(Top-K), Collaborative Topic Regression(CTR)と比較。
+
+また、そのドメインで既にインタラクションがあるold userのデータセットと、そのドメインではインターネットはないけど、Bing上で検索とかブラウジングの履歴はあるnew userでも比較している。
+
+データセットの作り方は、それぞれ全てのユーザを9:1でTrain setとTest setに分割。次にそれらを8:2でOld user setとNew user setに分割。Old userの方はitem viewの50%をTrainに利用、残りをTestに。New userの方は、Trainの方はitem viewなしでTestのみで利用。実験に用いたデータセットの概要はTable2。
+
+![fig2](/Users/Corpy/Desktop/table2.png)
+
+### 評価について
+評価は、
+それぞれ訓練セット内の$(user_i, item_j)$のペアに対して、9つの異なるアイテム$item_{r1},..., item_{r9}$をランダムに選ぶ。ここで$r1,..., r9$はランダムなindexを指す。そして、テスト用のペア$(user_i, item_{rk}), 1 \leq k \leq 9$を作り、Test setに加える。評価としては、どのくらい正しくシステムが正しいペア$(user_i, item_j)$を同じユーザの異なる他のアイテム$(user_i, item_{rk})$に対してよくrankできているかで評価。
+
+評価指標は以下の2つ。
+
+1. Mean Reciprocal Rank (MRR)平均逆順位  
+推薦システムや情報検索の評価指標の一つ。
+スコアをソートした結果、目的の情報（正解）がランキングされた順位を$r$とすると、単なる逆順位は、
+$$RR = \frac{1}{R}$$
+で表され、正解が1つ見つかればいいというような時に使う。値は0~1で、高いほどよい性能。例えば、正解が1番にランキングされていれば、$\frac{1}{1}=1$になり、10位にランキングされていれば、$\frac{1}{10}=0.11$になる。
+平均逆順位は、正解が複数あるときにランキングの平均をとったもの。
+
+$$MRR = \frac{1}{K} \sum_{i=1}^K{\frac{1}{r_i}}$$
+
+2. Precision@1 (P@1)  
+一番上に正解が来る確率
+
+
+## 8. Result & discussion
+Appsに対する推薦結果の評価はTable 3。Newsに対する結果はTable 4
+
+MV-DNN圧勝！！ただ....MV-Top-K w/ Xboxとはなんぞや。と思ったら、X boxのMovie/TVのレコメはセンシティブだから出せないが、とりあえずこのviewも加えると、すごい他のviewのスコアも上がるよ。という話。
+
+![fig2](/Users/Corpy/Desktop/table3.png)
+
+![fig2](/Users/Corpy/Desktop/table4.png)
+
+推薦結果の例は、Table 5
+
+![fig2](/Users/Corpy/Desktop/table5.png)
+
+## 9. Experiments of pablic data
+パブリックデータで検証！！とかいいつつも、なぜかMV-DNNではなくSingle-view-DNNで比較。
+
+![fig2](/Users/Corpy/Desktop/table6.png)
+
+
+## 10. Algorithm scalability
+
+Scalabilityの評価。CTRよりはいいですよー。
+
+![fig2](/Users/Corpy/Desktop/table7.png)
+
+## 11. Conclusion & future work
+### Conclusion
+
+- RecommendationのためのMulti-viewのモデル提案しました。各ドメインの共有の潜在表現を用いることで、そのドメインでログが少ないユーザにも推薦が出来ます。
+
+
+>As a pilot study, we believe that **this work has opened a new door** to recommendation systems using deep learn- ing from multiple data sources.
+
+
+### Future work
+
+- もっと多くのuser featureをuser viewに使いたい
+- 次元削減とかサンプル削ったりとかせずに、もっとscalableにしたい
+- より多くのdomainを追加したい
+- あとはどうやってCFと組み合わせるか考えたい
+
+## 13. References
+[1] Po-Sen Huang, Xiaodong He, Jianfeng Gao, Li Deng, Alex Acero, and Larry Heck. Learning deep structured semantic models for web search using clickthrough data. In CIKM’13, pages 2333–2338.
+
+
+## おまけ
 
 論文中に出てくるテクニカルタームの説明
 
@@ -119,21 +297,22 @@ Overall, we selected 3 million unigram features and 500K domain features, leadin
 ### 言語モデル
 単語が文書中に出現する過程を確率過程と見なし、ある単語がある位置に出現する確率はどれくらいかを計算するためのもの。自然言語処理における言語モデルの応用例としては、機械翻訳システムがある。機械翻訳システムでは生成した翻訳文がその適用先言語においてどれくらい尤もらしいかを言語モデルを使って定量的に評価することで、不自然な翻訳文が生成される可能性を減らすことができる。
 
-I went to schoolという文書を考える
+I went to schoolという文書を考える。  
+
 - unigram  
-$P(I, went, to, school) = P(I)P(went)P(to)P(school)$
+$P(I, went, to, school) = P(I)P(went)P(to)P(school)$  
 確率は毎回独立
 
 - bigram model
-$P(I, went, to, school) = P(I)P(went|I)P(to|went)P(school|to)≠P(I, went, school, to)$
+$P(I, went, to, school) = P(I)P(went|I)P(to|went)P(school|to)≠P(I, went, school, to)$  
 確率は一つ前の目に依存
 
-- n-gram model
-$P(w1,w2,…, wN) ~ ΠP(wk|wk-1, …, wk-n-1)$
+- n-gram model  
+$P(w1,w2,…, wN) = ΠP(wk|wk-1, …, wk-n-1)$  
 確率は1つ前からn-1つ前に依存
 
-- skip-gram model
-
+- skip-gram model  
+n-gramでは連続した記号列だったが、skip-gramでは連続していなくてもいい
 
 ココらへんは、以下の内田さんとダヌシカさんの資料がすごいわかりやすかった。読んでみるべし。
 
@@ -151,16 +330,16 @@ TFはTerm Frequencyで、それぞれの単語の文書内での出現頻度を�
 
 $$tf(t,d) = \frac{n_{t,d}}{\sum_{s \in d}n_{s,d}}$$
 
-$tf(t,d)$：文書$d$内のある単語$t$のTF値
-$n_{t,d}$：ある単語$t$の文書$d$内での出現回数
+$tf(t,d)$：文書$d$内のある単語$t$のTF値  
+$n_{t,d}$：ある単語$t$の文書$d$内での出現回数  
 $\sum_{s \in d}n_{s,d}$：文書$d$内のすべての単語の出現回数の和
 
 IDFはInverse Document Frequency。Document Frequencyはれぞれの単語全ての文書内で何回現れたかを表し、その対数をとるのでIDF。非常に多くの文書で共通に使われている単語はそれほど重要ではないという仮定に基づく。
 
 $$idf(t) = \log{\frac{N}{df(t)}} + 1$$
 
-$idf(t)$：ある単語$t$のIDF値
-$N$：全文書数
+$idf(t)$：ある単語$t$のIDF値  
+$N$：全文書数  
 $df(t)$；ある単語$t$が出現する文書の数
 
 対数をとっているのは、文書数の規模にに対して、IDFの値の変化を小さくするため。この2つの値を掛けたものをそれぞれの単語の重みにすれば、その値が大きいほど各文書を特徴付ける単語になる。
@@ -168,4 +347,3 @@ $df(t)$；ある単語$t$が出現する文書の数
 参考
 - [特徴抽出とTF-IDF](http://qiita.com/ynakayama/items/300460aa718363abc85c)
 - [TF-IDFで文書内の単語の重み付け](http://takuti.me/note/tf-idf/)
-
