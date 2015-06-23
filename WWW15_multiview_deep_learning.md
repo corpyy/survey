@@ -1,8 +1,7 @@
-# A Multi-View Deep Learning Approach for Cross Domain User Modeling in Recommendation System
+# About this paper
+Ali Elkahky, Yang Song, Xiaodong He, "A Multi-View Deep Learning Approach for Cross Domain User Modeling in Recommendation System", WWW'15 [PDF](http://research.microsoft.com/pubs/238334/frp1159-songA.pdf)
 
-## Ali Elkahky, Yang Song, Xiaodong He,  WWW'15 [PDF](http://research.microsoft.com/pubs/238334/frp1159-songA.pdf)
-
-## Abstract
+# Abstract
 
 近年のオンラインサービスは大量のユーザに対して、関連のあるコンテンツを推薦するために、personalizeする事が大事である。その時に必要となるのは、コールドスタート問題（新規ユーザ）に対応することである。本研究では、推薦の質とスケーラビリティの両方を実現する内容ベース推薦システムを提案する。
 
@@ -21,13 +20,13 @@
 
 Scalabilityの点に関しては、提案手法は数100万規模のユーザと数10億規模のアイテムに対して容易にスケールできる。全てのドメインから得られる特徴を組み合わせることは、それぞれのドメインにモデルを分けてやるより良いパフォーマンスであることを実験で確認した。
 
-## Gneral Terms
+# Gneral Terms
 User Modeling
 
-## Key words
+# Key words
 User Modeling, Recommendation System, Multi-view learning, Deep learning
 
-## 1. Introduction
+# 1. Introduction
 
 web serviceにおいて、推薦システムとpersonalizationのの重要性は増してきている。プロバイダは、ユーザと相関の高いアイテムを出来る限り早く見つけたい。
 
@@ -45,9 +44,9 @@ web serviceにおいて、推薦システムとpersonalizationのの重要性は
 
 両方アプリケーションとして一定の成果上げてる。Challengesはpersonalizationと推薦の質を両立することである。CFは履歴をもとに推薦するから、質の高い推薦するためにはユーザのアイテムへの閲覧履歴がたくさん必要になる。この問題は**cold start problem**として知られている。新規のweb serviceでは履歴がないのでこのcold start problemがより顕著である。よって、トラディショナルなCFは新規ユーザに対してはいい推薦できない。
 
-逆に、CBは推薦するためにユーザやアイテムの特徴を使う。例えば、新しい記事$N_i, N_j$が同じトピックを共有しており、ユーザが$N_i$を好きな場合、システムは$N_j$をユーザに推薦できる。同様に、ユーザ$U_i, U_j$が住んでいる場所や年齢、性別などが類似している場合、システムは$U_i$が過去にlikeしたものを$U_j$に推薦できる（これは履歴を使っているけど、CFと異なるのは、ユーザの特徴の類似性から推薦しているとこ。CFはユーザの履歴の類似性から推薦する）。
+逆に、CBは推薦するためにユーザやアイテムの特徴を使う。例えば、新しい記事$N_i, N_j$が同じトピックを共有しており、ユーザが$N_i$を好きな場合、システムは$N_j$をユーザに推薦できる。同様に、ユーザ$U_i, U_j$が住んでいる場所や年齢、性別などが類似している場合、システムは$U_i$が過去にlikeしたものを$U_j$に推薦できる（これは履歴を使っているけどCFと異なるのは、ユーザの特徴の類似性から推薦しているとこ。CFはユーザの履歴の類似性から推薦する）。
 
-実際に研究でも、CBはcold start problemに対応可能だと示されている。**しかし実際はその有効性には疑問がある。なぜなら、ユーザの特徴を限られた情報から獲得することは一般に難しく、だいたいは実際のユーザの興味を正確に捉えることはできない。**このような限界に挑戦するために、我々は、ユーザとアイテムの両方をうまく利用した推薦システムを提案する。
+実際に研究でも、CBはcold start problemに対応可能だと示されている。**しかし実際はその有効性には疑問がある。なぜなら、ユーザの特徴を限られた情報から獲得することは一般に難しく、だいたいは実際のユーザの興味を正確に捉えることはできない。**このような限界に挑戦するために、我々はユーザとアイテムの両方をうまく利用した推薦システムを提案する。
 
 そこで、本研究では、ユーザのprofileを用いるのではなく、ユーザのブラウジングやサーチの履歴からユーザの興味をモデル化して、リッチなユーザ表現を獲得する手法を提案する。根本的な仮定として、ユーザのオンライン上での行動はユーザのバックグラウンドや嗜好を反映するので、ユーザが興味があるであろうアイテムやトピックの正確な洞察を得ることができる。
 
@@ -65,7 +64,7 @@ MV-DNNは全てのドメインのユーザ嗜好データを用いているの�
 
 Deep learningを使ってリッチなユーザ表現を得ることのChallengeは特徴空間が高次元になってしまい学習が難しくなることである。本研究では、scalabilityを実現するため、様々な次元削減技術を提案している。
 
-本研究のコントリビューションは以下の5つである。
+### コントリビューション
 
 1. recommendation systemを構築するため、リッチなユーザ特徴を用いた
 2. deep learningを用いたcontent-based recommendation systemを提案し、scalableなシステムを実現するための様々なテクニックを調査した
@@ -73,13 +72,11 @@ Deep learningを使ってリッチなユーザ表現を得ることのChallenge�
 4. MV-DNNから学習されたsemantic feature mappingによりユーザのcold start problemに対応した
 5. 実世界のビッグデータを用いた厳密な評価実験により、state-of-the-artを大きく上回る有効性を確認した
 
-
-
-## 2. Related work
+# 2. Related work
 
 省略
  
-## 3. Description of the data sets
+# 3. Description of the data sets
 
 以下の4つのデータセットを用いた。
 
@@ -89,6 +86,7 @@ Deep learningを使ってリッチなユーザ表現を得ることのChallenge�
 4. Xboxから得られるMovie/TVの視聴ログ
 
 すべてのログは、英語を公用語とするマーケット（US, Canada, UK）で2013.12-2014.6の間に収集された。
+
 
 ### user feature
 - Bing上でのユーザの検索クエリとクリックしたURLを収集
@@ -118,13 +116,14 @@ Deep learningを使ってリッチなユーザ表現を得ることのChallenge�
 
 我々のモデルでは、ユーザ特徴はuser viewにマップされ、それ以外の特徴はそれぞれ異なるitem viewにマップされる。モデルを学習するために、それぞれのuser viewはそのユーザを含むitem viewにマッチさせた。これを実現するためIDによって内部で結合し、user-item viewのペアからログインしているユーザをサブサンプリングした。これによってつくたれたデータセットはTable 1
 
-![table1](/Users/Corpy/Desktop/table1.png)
+![table1.png](https://qiita-image-store.s3.amazonaws.com/0/83840/0039ff33-79cf-366b-42ac-dfbc03cc5b12.png)
 
-## 4. DSSM for user modeling in recommendation systems
+# 4. DSSM for user modeling in recommendation systems
 
 CIKM'13の論文[1]でweb検索において文書とクエリのマッチングを強化するDSSMモデルを提案した。今回紹介するmulti-viewモデルはそれに近い。DSSM（figure 1）を以下に簡単に説明する。
 
-![fig1](/Users/Corpy/Desktop/fig1.png)
+![fig1.png](https://qiita-image-store.s3.amazonaws.com/0/83840/8fe2b177-5c8d-f2b5-d063-77762120f733.png)
+
 
 DNNへの入力(生のtext features)は高次元のterm vector（ex.正規化をしていないクエリやドキュメント内の出現回数）である。
 DSSMでは入力はそれぞれ２つのNNを通過し、共有潜在空間内のsemantic vectorにマップされる。
@@ -169,60 +168,62 @@ $$L(Λ) = - log\prod_{(Q, D^+)}P(D^+|Q)$$
 
 $Λ$はparameter set。
 
-## 5. Multi-view deep neural network
+# 5. Multi-view deep neural network
 MV-DNNはDSSMを2つ以上の異なるviewを一つの共有viewにマップするmulti-vieモデルに拡張したものであり、２つ以上の異なるviewの共有mapping viewを学習する際の一般的なモデルである（figure 2）。
 
-![fig2](/Users/Corpy/Desktop/fig2.png)
+![fig2.png](https://qiita-image-store.s3.amazonaws.com/0/83840/ccc12b9c-1c4e-d7c1-ab30-f19a362a027f.png)
+
 
 このセッティングにおいて、viewは$v+1$個あり、pivot viewを$X_u$、それ以外を$X_1,...,X_v$とする。それぞれviewは非線形マッピング層$f_i(X_i, W_i)$を持ち、これらは、shared semantic space上の$Y_i$に変換される。
 
 訓練データの、$j$番目のサンプルはpivot viewの$X_{u,j}$と、補助的なactive viewの$X_{a,j}$をもつ。ここでaはacitive viewのindexを指す。activeじゃない他のviewの入力$X_{i:i≠a}$は0 vectorとする。semantic spaceにおいてpivot viewのマッピングとそれ以外のviewのマッピングの相関の合計を最大化するような非線形マッピングを以下のようにして探す。
 
-$$p = arg_{W_u} max_{W_1,...W_v} \sum_{j=1}^{N}{\frac{e^{αa cos(Yu,Ya,j)}}{􏰃\sum_{X'∈R^da}{e^{α cos(Yu,fa(X′,Wa))}}}}$$
+
+![function1.png](https://qiita-image-store.s3.amazonaws.com/0/83840/31fe44e3-aa2e-2cad-3143-a3ef17fb2cae.png)
+
 
 我々のセットアップでは、pivot view$X_u$がuser featureであり、それ以外の付加的なviewが推薦したいそれぞれ異なるタイプのitem featureである。このようにパラメータをシェアすることで、あるドメインでデータが少なくても多のより多くあるドメインを通してよいmappingを学習することができる。
 
 類似したnewsの嗜好を持つユーザは、他のモダリティにおいても類似した嗜好を持つという仮定が成立てば、この手法はうまくいくはずである。つまり、この仮定が正しければ、あらゆるドメインのサンプルが類似したユーザを全てのドメイン内でより正確にグルーピングすることを助ける。実験結果より、この仮定には合理性があることが確認できた。
 
-### 5.1. Training MV-DNN
+## 5.1. Training MV-DNN
 MV-DNNは確率的勾配降下法(Stochastic Gradient Decent; SGD)を用いて学習した。それぞれ訓練サンプルはuser viewとdata viewのペアの入力になっている。
 
-### 5.2. Advantages of MV-DNN
+## 5.2. Advantages of MV-DNN
 
 利点というか従来のDSSMからの改良が2つある。
 
 - 従来のDSSMはクエリviewと文書viewを同じサイズの特徴次元数で用いていた。でも実際は、全部同じサイズのでうまく表せない。例えば、tri-gramで全部表すとして、URLはwwwとかcomとかの接頭辞や接尾辞をもつ。これらが、同じ特徴としてマッピングされてしまう。でも我々はinputのraw textが短い時こういう問題は起こりにくいことを発見した。だから我々はその無駄な部分を削除して、category情報を入れた
 - pair-wiseで学習することでscalabilityの向上を果たした
 
-## 6. Dimension and data reduction
+# 6. Dimension and data reduction
 
 システムのスケーラビリティを向上させるために以下の４つを考えた。
 
-### 6.1. Top Features
+## 6.1. Top Features
 most frequent featureのTop-Kを選ぶ。前に述べたように、user raw featureをTF-IDFのスコアで前処理。
 
-### 6.2. K-means
+## 6.2. K-means
 K-means clusteringを使う。
 
 
-### 6.3. Local sensitive Hashing
+## 6.3. Local sensitive Hashing
 Local sensitive hahing(LSH)を使う。
 
-### 6.4. Reduce the Number of Training Examples
+## 6.4. Reduce the Number of Training Examples
 Train datasetのサンプル自体を減らす。ユーザに対応するそれぞれのviewのsampleがひとつになるように。各viewでユーザがライクしたすべてのアイテムのアベレージとる？
 
-## 7. Experimental setup
+# 7. Experimental setup
 MV-DNNを従来手法のMost Frequent, 一般的なSVD matrix decompositionを使ったCF, CCA(Top-K), Collaborative Topic Regression(CTR)と比較。
 
 また、そのドメインで既にインタラクションがあるold userのデータセットと、そのドメインではインターネットはないけど、Bing上で検索とかブラウジングの履歴はあるnew userでも比較している。
 
 データセットの作り方は、それぞれ全てのユーザを9:1でTrain setとTest setに分割。次にそれらを8:2でOld user setとNew user setに分割。Old userの方はitem viewの50%をTrainに利用、残りをTestに。New userの方は、Trainの方はitem viewなしでTestのみで利用。実験に用いたデータセットの概要はTable2。
 
-![fig2](/Users/Corpy/Desktop/table2.png)
+![table2.png](https://qiita-image-store.s3.amazonaws.com/0/83840/314dbcf1-65c0-9adc-92c5-2b0bf4d0698a.png)
 
-### 評価について
-評価は、
-それぞれ訓練セット内の$(user_i, item_j)$のペアに対して、9つの異なるアイテム$item_{r1},..., item_{r9}$をランダムに選ぶ。ここで$r1,..., r9$はランダムなindexを指す。そして、テスト用のペア$(user_i, item_{rk}), 1 \leq k \leq 9$を作り、Test setに加える。評価としては、どのくらい正しくシステムが正しいペア$(user_i, item_j)$を同じユーザの異なる他のアイテム$(user_i, item_{rk})$に対してよくrankできているかで評価。
+## 評価について
+評価は、それぞれ訓練セット内の$(user_i, item_j)$のペアに対して、9つの異なるアイテム$item_{r1},..., item_{r9}$をランダムに選ぶ。ここで$r1,..., r9$はランダムなindexを指す。そして、テスト用のペア$(user_i, item_{rk}), 1 \leq k \leq 9$を作り、Test setに加える。評価としては、どのくらい正しくシステムが正しいペア$(user_i, item_j)$を同じユーザの異なる他のアイテム$(user_i, item_{rk})$に対してよくrankできているかで評価。
 
 評価指標は以下の2つ。
 
@@ -239,32 +240,32 @@ $$MRR = \frac{1}{K} \sum_{i=1}^K{\frac{1}{r_i}}$$
 一番上に正解が来る確率
 
 
-## 8. Result & discussion
+# 8. Result & discussion
 Appsに対する推薦結果の評価はTable 3。Newsに対する結果はTable 4
 
 MV-DNN圧勝！！ただ....MV-Top-K w/ Xboxとはなんぞや。と思ったら、X boxのMovie/TVのレコメはセンシティブだから出せないが、とりあえずこのviewも加えると、すごい他のviewのスコアも上がるよ。という話。
 
-![fig2](/Users/Corpy/Desktop/table3.png)
+![table3.png](https://qiita-image-store.s3.amazonaws.com/0/83840/1c447e69-2889-1619-09c6-2050e17332c5.png)
 
-![fig2](/Users/Corpy/Desktop/table4.png)
+![table4.png](https://qiita-image-store.s3.amazonaws.com/0/83840/89a3a1ee-d070-b043-49e0-5823ceef88b6.png)
+
 
 推薦結果の例は、Table 5
 
-![fig2](/Users/Corpy/Desktop/table5.png)
+![table5.png](https://qiita-image-store.s3.amazonaws.com/0/83840/641eadb4-15e8-bf8e-b90b-3218935d180a.png)
 
-## 9. Experiments of pablic data
+# 9. Experiments of pablic data
 パブリックデータで検証！！とかいいつつも、なぜかMV-DNNではなくSingle-view-DNNで比較。
 
-![fig2](/Users/Corpy/Desktop/table6.png)
+![table6.png](https://qiita-image-store.s3.amazonaws.com/0/83840/e66f6dd4-9943-3ff4-1c4d-3d851a7f4d72.png)
 
-
-## 10. Algorithm scalability
+# 10. Algorithm scalability
 
 Scalabilityの評価。CTRよりはいいですよー。
 
-![fig2](/Users/Corpy/Desktop/table7.png)
+![table7.png](https://qiita-image-store.s3.amazonaws.com/0/83840/4f4374df-bfb7-351d-2ae5-75f8670ae782.png)
 
-## 11. Conclusion & future work
+# 11. Conclusion & future work
 ### Conclusion
 
 - RecommendationのためのMulti-viewのモデル提案しました。各ドメインの共有の潜在表現を用いることで、そのドメインでログが少ないユーザにも推薦が出来ます。
@@ -273,25 +274,23 @@ Scalabilityの評価。CTRよりはいいですよー。
 >As a pilot study, we believe that **this work has opened a new door** to recommendation systems using deep learn- ing from multiple data sources.
 
 
-### Future work
+## Future work
 
 - もっと多くのuser featureをuser viewに使いたい
 - 次元削減とかサンプル削ったりとかせずに、もっとscalableにしたい
 - より多くのdomainを追加したい
 - あとはどうやってCFと組み合わせるか考えたい
 
-## 13. References
+# 13. References
 [1] Po-Sen Huang, Xiaodong He, Jianfeng Gao, Li Deng, Alex Acero, and Larry Heck. Learning deep structured semantic models for web search using clickthrough data. In CIKM’13, pages 2333–2338.
 
 
-## おまけ
+# おまけ
 
 論文中に出てくるテクニカルタームの説明
 
 ### Unigram features
 記号（単語や文字）列を統計分析する最も基本となるのは、それぞれの記号が文書中に現れる度数(頻度)である。さらに拡張した統計モデルは、2つの記号、3つの記号、…、n個の記号が隣接して出現する共起度数である。1つの記号、隣接する2つの記号、3つの記号、…n個の記号の度数を統計分析する方法をn-gram modelと呼ぶ。nが1つの記号の時がunigramである。
-
-ここらへんは説明し始めると、色々説明せねばならず間違えそうなので、さわりだけ。一応前提として、言語モデルは以下。
 
 ### 言語モデル
 単語が文書中に出現する過程を確率過程と見なし、ある単語がある位置に出現する確率はどれくらいかを計算するためのもの。自然言語処理における言語モデルの応用例としては、機械翻訳システムがある。機械翻訳システムでは生成した翻訳文がその適用先言語においてどれくらい尤もらしいかを言語モデルを使って定量的に評価することで、不自然な翻訳文が生成される可能性を減らすことができる。
@@ -313,7 +312,6 @@ $P(w1,w2,…, wN) = ΠP(wk|wk-1, …, wk-n-1)$
 - skip-gram model  
 n-gramでは連続した記号列だったが、skip-gramでは連続していなくてもいい
 
-ココらへんは、以下の内田さんとダヌシカさんの資料がすごいわかりやすかった。読んでみるべし。
 
 参考
 - 内田将夫さん[6. 初歩の言語モデル](http://www2.nict.go.jp/univ-com/multi_trans/member/mutiyama/corpmt/6.pdf)
